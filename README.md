@@ -1,24 +1,47 @@
-<h1 align="center">Hi 👋, I'm Md.Hosen Bakaul</h1>
-<h3 align="center">A passionate Full-stack web development from Bangladeshi</h3>
+# 🚀 Modern Full-Stack Developer Portfolio
 
-- 🔭 I’m currently working on [portfolio](https://hosen-portfolio.vercel.app/)
+A sleek, responsive, and highly animated portfolio website designed to showcase a Full-Stack Developer's skills, education, and projects. Featuring a premium dark mode interface and fluid scroll-based animations.
 
-- 🌱 I’m currently learning **Tailwind, Next.js**
+Live Link: https://hosen-portfolio.vercel.app/
 
-- 👯 I’m looking to collaborate on [portfolio](https://hosen-portfolio.vercel.app/)
+## ✨ Features
 
-- 🤝 I’m looking for help with [portfolio](https://hosen-portfolio.vercel.app/)
+* **📱 Fully Responsive:** Optimized for mobile, tablet, and desktop screens.
+* **🍔 Smart Navigation:** A custom hamburger menu for mobile devices with smooth sliding transitions.
+* **🎨 Premium Animations:** * Dynamic glowing background blobs in the Hero section.
+    * Scroll-reveal effects for all sections.
+    * Interactive, animated progress bars in the Skills section.
+* **📧 Email Integration:** Integrated with **EmailJS** to receive messages directly in your inbox without a backend.
+* **⚡ High Performance:** Clean code structure ensuring fast load times and smooth UX.
 
-- 👨‍💻 All of my projects are available at [https://hosen-portfolio.vercel.app/](https://hosen-portfolio.vercel.app/)
+## 🛠 Tech Stack
 
-- 💬 Ask me about **Html,Css,Javascript, React , Next.js , Firebase, Mongodb, Express js.**
+* **HTML5** – Semantic structure.
+* **CSS3** – Modern styling with Flexbox, CSS Grid, and custom keyframe animations.
+* **JavaScript (ES6)** – Intersection Observer API for scroll effects and DOM manipulation.
+* **EmailJS** – Client-side email service integration.
+* **Font Awesome** – Professional iconography.
+* **Google Fonts** – Typography using 'Syne' and 'DM Sans'.
 
-- 📫 How to reach me **bakaul15-4163@diu.edu.bd**
+## 🚀 Setup & Installation
 
-<h3 align="left">Connect with me:</h3>
-<p align="left">
-<a href="https://linkedin.com/in/www.linkedin.com/in/hosen-bakaul-5492b4306" target="blank"><img align="center" src="https://raw.githubusercontent.com/rahuldkjain/github-profile-readme-generator/master/src/images/icons/Social/linked-in-alt.svg" alt="www.linkedin.com/in/hosen-bakaul-5492b4306" height="30" width="40" /></a>
-</p>
+1.  **Clone the repository:**
+    ```bash
+    git clone: https://github.com/bakaul212/portfolio.git
 
-<h3 align="left">Languages and Tools:</h3>
-<p align="left"> <a href="https://www.gnu.org/software/bash/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/gnu_bash/gnu_bash-icon.svg" alt="bash" width="40" height="40"/> </a> <a href="https://getbootstrap.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/bootstrap/bootstrap-plain-wordmark.svg" alt="bootstrap" width="40" height="40"/> </a> <a href="https://www.cprogramming.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/c/c-original.svg" alt="c" width="40" height="40"/> </a> <a href="https://www.w3schools.com/css/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="css3" width="40" height="40"/> </a> <a href="https://dart.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/dartlang/dartlang-icon.svg" alt="dart" width="40" height="40"/> </a> <a href="https://expressjs.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/express/express-original-wordmark.svg" alt="express" width="40" height="40"/> </a> <a href="https://www.figma.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/figma/figma-icon.svg" alt="figma" width="40" height="40"/> </a> <a href="https://firebase.google.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/firebase/firebase-icon.svg" alt="firebase" width="40" height="40"/> </a> <a href="https://flutter.dev" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/flutterio/flutterio-icon.svg" alt="flutter" width="40" height="40"/> </a> <a href="https://www.w3.org/html/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/html5/html5-original-wordmark.svg" alt="html5" width="40" height="40"/> </a> <a href="https://www.java.com" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/java/java-original.svg" alt="java" width="40" height="40"/> </a> <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/javascript/javascript-original.svg" alt="javascript" width="40" height="40"/> </a> <a href="https://www.linux.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/linux/linux-original.svg" alt="linux" width="40" height="40"/> </a> <a href="https://www.mongodb.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mongodb/mongodb-original-wordmark.svg" alt="mongodb" width="40" height="40"/> </a> <a href="https://www.mysql.com/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/mysql/mysql-original-wordmark.svg" alt="mysql" width="40" height="40"/> </a> <a href="https://nextjs.org/" target="_blank" rel="noreferrer"> <img src="https://cdn.worldvectorlogo.com/logos/nextjs-2.svg" alt="nextjs" width="40" height="40"/> </a> <a href="https://nodejs.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/nodejs/nodejs-original-wordmark.svg" alt="nodejs" width="40" height="40"/> </a> <a href="https://www.python.org" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/python/python-original.svg" alt="python" width="40" height="40"/> </a> <a href="https://reactjs.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/react/react-original-wordmark.svg" alt="react" width="40" height="40"/> </a> <a href="https://reactnative.dev/" target="_blank" rel="noreferrer"> <img src="https://reactnative.dev/img/header_logo.svg" alt="reactnative" width="40" height="40"/> </a> <a href="https://seaborn.pydata.org/" target="_blank" rel="noreferrer"> <img src="https://seaborn.pydata.org/_images/logo-mark-lightbg.svg" alt="seaborn" width="40" height="40"/> </a> <a href="https://tailwindcss.com/" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/tailwindcss/tailwindcss-icon.svg" alt="tailwind" width="40" height="40"/> </a> <a href="https://www.tensorflow.org" target="_blank" rel="noreferrer"> <img src="https://www.vectorlogo.zone/logos/tensorflow/tensorflow-icon.svg" alt="tensorflow" width="40" height="40"/> </a> <a href="https://www.typescriptlang.org/" target="_blank" rel="noreferrer"> <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/typescript/typescript-original.svg" alt="typescript" width="40" height="40"/> </a> </p>
+2.  **Configuration:**
+    Open `index.html` and replace the placeholder keys in the script section with your own [EmailJS](https://www.emailjs.com/) credentials:
+    ```javascript
+    emailjs.init("YOUR_PUBLIC_KEY");
+    emailjs.sendForm('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', this);
+    ```
+
+3.  **Run Locally:**
+    Simply open `index.html` in your favorite browser.
+
+## 🤝 Contact
+
+**Md Hosen Bakaul** *Full Stack Developer* [Your LinkedIn Profile] | [Your Email Address]
+
+---
+⭐ If you find this project helpful, don't forget to give it a star!
