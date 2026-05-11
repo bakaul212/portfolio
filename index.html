@@ -39,6 +39,35 @@
     overflow-x: hidden;
   }
 
+  /* ─── Custom Scrollbar ─── */
+/* স্ক্রলবারের পুরো অংশ */
+::-webkit-scrollbar {
+  width: 8px; /* স্ক্রলবার কতটা চওড়া হবে */
+}
+
+/* স্ক্রলবারের পেছনের রাস্তা (Track) */
+::-webkit-scrollbar-track {
+  background: var(--card-bg, #0a0a0f); /* আপনার ডার্ক থিমের সাথে ম্যাচিং */
+}
+
+/* স্ক্রলবারের যে অংশটি নড়াচড়া করে (Thumb) */
+::-webkit-scrollbar-thumb {
+  background: var(--grad); /* আপনার আগের দেওয়া গ্রাডিয়েন্ট কালার */
+  border-radius: 15px; /* স্ক্রলবারটি গোল করার জন্য */
+  border: 2px solid var(--card-bg, #0a0a0f); /* ট্র‍্যাকের সাথে গ্যাপ রাখার জন্য */
+}
+
+/* মাউস হোভার করলে স্ক্রলবার একটু উজ্জ্বল হবে */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--c1,#0000FF); 
+}
+
+/* Firefox এর জন্য স্ক্রলবার স্টাইল (ঐচ্ছিক) */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--c1) var(--card-bg);
+}
+
   /* ─── Noise Overlay ─── */
   body::before {
     content: '';
@@ -46,6 +75,122 @@
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
     pointer-events: none; z-index: 9999; opacity: .4;
   }
+
+  /* ─── Variables for Dark/Light Mode ─── */
+:root {
+  --surface: #0a0a0f;
+  --card: #12121b;
+  --text: #ffffff;
+  --muted: #a0a0a0;
+  --border: rgba(255, 255, 255, 0.1);
+  --grad: linear-gradient(135deg, #6366f1, #a855f7);
+}
+[data-theme="light"] {
+    /* একটি সুন্দর অফ-ওয়াইট ব্যাকগ্রাউন্ড */
+    --bg: #f0f4f8; 
+    --surface: #e1e8f0; 
+    --card: #ffffff;
+    
+    /* টেক্সট কালার একদম কালো না করে ডার্ক ব্লু-গ্রে রাখা হয়েছে */
+    --text: #1e293b; 
+    --muted: #64748b;
+    
+    /* বর্ডারের জন্য হালকা শ্যাডো কালার */
+    --border: rgba(0, 0, 0, 0.05);
+    
+    /* লাইট মোডে গ্রাডিয়েন্টকে একটু সফট করার জন্য */
+    --grad: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899);
+}
+
+/* ─── Back to Top Button ─── */
+#backToTop {
+  display: none;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 99;
+  border: none;
+  outline: none;
+  background: var(--grad);
+  color: white;
+  cursor: pointer;
+  padding: 15px;
+  border-radius: 50%;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+  transition: 0.3s;
+}
+
+#backToTop:hover {
+  transform: translateY(-5px);
+}
+
+/* লাইট মোডে কার্ডের বিশেষ স্টাইল */
+[data-theme="light"] .exp-card, 
+[data-theme="light"] .timeline-content, 
+[data-theme="light"] .skill-category {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.8); /* গ্লাস ইফেক্ট */
+}
+
+[data-theme="light"] .exp-card:hover, 
+[data-theme="light"] .timeline-content:hover, 
+[data-theme="light"] .skill-category:hover {
+    box-shadow: 0 20px 40px rgba(100, 116, 139, 0.15);
+    background: #ffffff;
+}
+
+/* ─── Theme Switcher UI ─── */
+.theme-switch-wrapper {
+  position: fixed;
+  top: 20px;
+  right: 100px; /* আপনার নেভিগেশনের সাথে মিলিয়ে অ্যাডজাস্ট করুন */
+  z-index: 1000;
+}
+.theme-switch {
+  display: inline-block;
+  height: 34px;
+  position: relative;
+  width: 60px;
+}
+.theme-switch input { display:none; }
+.slider {
+  background-color: #333;
+  bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0;
+  transition: .4s; border-radius: 34px;
+  display: flex; align-items: center; justify-content: space-around; padding: 0 5px;
+}
+.slider i { color: #f1c40f; font-size: 14px; }
+.slider:before {
+  background-color: white; bottom: 4px; content: ""; height: 26px; left: 4px;
+  position: absolute; transition: .4s; width: 26px; border-radius: 50%; z-index: 2;
+}
+input:checked + .slider { background-color: #6366f1; }
+input:checked + .slider:before { transform: translateX(26px); }
+
+/* ─── Enhanced Card Hover Animations ─── */
+.chip, .about-img-frame, .project-card { 
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.chip:hover {
+  transform: scale(1.1) translateY(-2px);
+  background: var(--grad);
+  color: white;
+  border-color: transparent;
+}
+
+.about-img-frame:hover {
+  transform: scale(1.02) rotate(1deg);
+  box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+}
+
+/* New Animation: Floating */
+@keyframes floating {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+  100% { transform: translateY(0px); }
+}
+.about-accent { animation: floating 3s ease-in-out infinite; }
 
   /* ─── Navbar ─── */
   nav {
@@ -162,6 +307,71 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
+  /* ─── Navbar Update ─── */
+nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    height: var(--nav-h);
+    background: rgba(10,10,15,.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 5%;
+    z-index: 1000;
+}
+
+.nav-links {
+    display: flex; gap: 2rem; list-style: none;
+}
+
+.nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: .9rem;
+    font-weight: 500;
+    letter-spacing: .5px;
+    transition: color .3s;
+    position: relative;
+}
+
+/* Hover effect */
+.nav-links a::after {
+    content: '';
+    position: absolute; bottom: -4px; left: 0;
+    width: 0; height: 2px;
+    background: var(--grad);
+    transition: width .3s;
+    border-radius: 2px;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a:hover::after { width: 100%; }
+
+/* মোবাইল রেসপন্সিভ ডিজাইন */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none; /* ডেস্কটপ মেনু হাইড হবে */
+    }
+
+    .hamburger {
+        display: flex; /* হ্যামবার্গার বাটন দেখা যাবে */
+    }
+
+    .nav-actions {
+        margin-right: 15px; /* থিম টগল বাটনের পজিশন ঠিক করার জন্য */
+    }
+}
+
+/* হ্যামবার্গার বাটনের এনিমেশন (অপশনাল কিন্তু সুন্দর দেখায়) */
+.hamburger.active span:nth-child(1) {
+    transform: translateY(7px) rotate(45deg);
+}
+.hamburger.active span:nth-child(2) {
+    opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+    transform: translateY(-7px) rotate(-45deg);
+}
+
 
   /* ─── Hero ─── */
   #hero {
@@ -405,37 +615,123 @@
   }
   .stat-label { font-size: .8rem; color: var(--muted); margin-top: .2rem; }
 
+  /* ─── Hero Section Responsive Fix ─── */
+
+@media (max-width: 992px) {
+    #hero {
+        grid-template-columns: 1fr; /* কলাম একটি হয়ে যাবে */
+        text-align: center;
+        gap: 3rem;
+        padding-top: 120px;
+    }
+
+    .hero-text {
+        order: 2; /* টেক্সট নিচে আসবে */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-image {
+        order: 1; /* ইমেজ উপরে আসবে */
+    }
+
+    .hero-desc {
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .hero-greeting {
+        justify-content: center;
+    }
+
+    .hero-greeting::before {
+        display: none; /* মোবাইলে লাইনটি সুন্দর লাগে না তাই হাইড */
+    }
+
+    .hero-actions {
+        justify-content: center;
+    }
+
+    .hero-stats {
+        justify-content: center;
+    }
+}
+
+@media (max-width: 576px) {
+    #hero {
+        padding-top: 100px;
+        padding-bottom: 50px;
+    }
+
+    .hero-name {
+        font-size: 3.2rem; /* মোবাইলে নাম একটু ছোট হবে */
+        letter-spacing: -1px;
+    }
+
+    .hero-image-wrap {
+        width: 280px; /* ইমেজের উইডথ কমানো হয়েছে */
+        height: 340px;
+    }
+
+    .hero-stats {
+        gap: 1.2rem;
+        flex-wrap: wrap; /* জায়গা না থাকলে নিচে নেমে আসবে */
+    }
+
+    .stat-num {
+        font-size: 1.5rem;
+    }
+
+    .stat-label {
+        font-size: 0.7rem;
+    }
+
+    .fc-1 { right: 0; top: 0; }
+    .fc-2 { left: 0; bottom: 10px; }
+    
+    .hero-actions .btn-primary, 
+    .hero-actions .btn-secondary {
+        width: 100%; /* বাটনগুলো ফুল উইডথ হবে */
+        justify-content: center;
+    }
+}
+
+/* ─── About Section ─── */
 /* ─── About Section ─── */
 #about {
   background: var(--surface);
-  padding: 100px 0; /* আপনার প্রয়োজনমতো প্যাডিং দিন */
+  padding: 80px 0;
   overflow: hidden;
 }
 
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr 1.4fr; /* বামে ছবি, ডানে লেখা */
-  gap: 5rem;
+  grid-template-columns: 1fr 1.2fr; /* ইমেজ এবং টেক্সটের অনুপাত */
+  gap: 4rem;
   align-items: center;
-  max-width: 1200px;
+  max-width: 1100px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* Image Side Styles */
+/* Image Side */
 .about-image-side {
   position: relative;
-  z-index: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .about-img-frame {
   width: 100%;
+  max-width: 400px; /* ইমেজের ম্যাক্স সাইজ */
   aspect-ratio: 4/5;
-  border-radius: 24px;
+  border-radius: 30px;
   background: var(--card);
   border: 1px solid var(--border);
   overflow: hidden;
   position: relative;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
 }
 
 .about-img-frame img {
@@ -443,64 +739,23 @@
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 2; /* ইমেজকে প্লেসহোল্ডারের উপরে রাখবে */
 }
 
-.about-img-placeholder {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: var(--muted);
-  gap: 1rem;
-  z-index: 1; /* ইমেজ না থাকলে এটি দেখা যাবে */
+/* Text Content */
+.about-text {
+  text-align: left;
 }
 
-.about-img-placeholder i {
-  font-size: 5rem;
-  opacity: .3;
-}
-
-/* Accents/Decorations */
-.about-accent {
-  position: absolute;
-  width: 80px;
-  height: 80px;
-  border: 3px solid var(--c2);
-  border-radius: 50%;
-  top: -20px;
-  right: -20px;
-  opacity: .5;
-  z-index: -1;
-}
-
-.about-accent-2 {
-  position: absolute;
-  width: 50px;
-  height: 50px;
-  background: var(--c1);
-  border-radius: 12px;
-  bottom: 30px;
-  left: -20px;
-  opacity: .3;
-  transform: rotate(20deg);
-  z-index: -1;
-}
-
-/* Text Content Styles */
 .about-text .section-tag {
-  margin-bottom: 1rem;
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 6px 15px;
+  border-radius: 20px;
+  font-size: 0.85rem;
   color: var(--muted);
-  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
 }
 
 .about-text .dot {
@@ -511,184 +766,345 @@
 }
 
 .about-text .section-title {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
   margin-bottom: 1.5rem;
   line-height: 1.2;
+  font-weight: 800;
 }
 
 .about-text p {
   color: var(--muted);
   margin-bottom: 1.2rem;
   font-size: 1.05rem;
-  line-height: 1.85;
+  line-height: 1.7;
 }
 
 /* Chips Style */
 .about-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: .6rem;
+  gap: 10px;
   margin-top: 2rem;
 }
 
 .chip {
-  padding: .5rem 1.2rem;
-  border-radius: 50px;
-  font-size: .85rem;
-  font-weight: 500;
+  padding: 8px 18px;
+  border-radius: 12px;
+  font-size: 0.85rem;
   border: 1px solid var(--border);
   color: var(--text);
-  background: rgba(255,255,255,.04);
+  background: rgba(255,255,255,0.03);
   display: flex;
   align-items: center;
-  gap: .5rem;
+  gap: 8px;
+}
+
+/* ─── Responsive for Mobile ─── */
+@media (max-width: 968px) {
+  .about-grid {
+    grid-template-columns: 1fr; /* এক কলামে চলে আসবে */
+    gap: 3rem;
+    text-align: center;
+  }
+
+  .about-text {
+    text-align: center; /* মোবাইলে লেখা মাঝখানে থাকবে */
+  }
+
+  .about-text .section-tag {
+    justify-content: center;
+  }
+
+  .about-chips {
+    justify-content: center; /* চিপসগুলো মাঝখানে থাকবে */
+  }
+
+  .about-img-frame {
+    max-width: 300px; /* মোবাইলে ইমেজ একটু ছোট হবে */
+    margin: 0 auto;
+  }
+}
+
+/* Scroll Reveal Animation */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease-out;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ─── Skills Section ─── */
+#skills {
+  padding: 80px 0;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+  margin-top: 3rem;
+}
+
+/* ─── Skills Section Upgraded ─── */
+.skill-category {
+    background: rgba(255, 255, 255, 0.03); /* Glass effect */
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 2.5rem;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+/* Hover-এ কার্ডের পেছনে একটি গ্লো (Glow) আসবে */
+.skill-category::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(var(--c1-rgb), 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.5s;
+    pointer-events: none;
+}
+
+.skill-category:hover::before {
+    opacity: 1;
+}
+
+.skill-category:hover {
+    transform: translateY(-12px) scale(1.02);
+    border-color: rgba(255, 255, 255, 0.3);
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Progress Bar-এ শাইন (Shine) এনিমেশন */
+.skill-bar-fill {
+    position: relative;
+    overflow: hidden;
+}
+
+.skill-bar-fill::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    animation: shine 3s infinite;
+}
+
+@keyframes shine {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Tech Tags Hover Effect */
+.tech-tag:hover {
+    background: var(--grad) !important;
+    color: white !important;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    border-color: transparent;
+}
+
+.skill-cat-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.skill-cat-icon {
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
   transition: 0.3s;
 }
 
-.chip:hover {
-  background: rgba(255,255,255,.08);
-  border-color: var(--muted);
+.skill-category:hover .skill-cat-icon {
+  transform: rotate(10deg);
+  background: var(--grad);
+  color: white !important;
 }
 
-.chip-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
+.skill-cat-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text);
 }
 
-/* Responsive for Mobile */
-@media (max-width: 968px) {
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: 3rem;
-  }
+/* Progress Bar Styling */
+.skill-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
-  /* ─── Skills ─── */
-  #skills { }
+.skill-bar-top {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  margin-bottom: 0.6rem;
+  font-weight: 500;
+  color: var(--muted);
+}
 
-  .skills-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-  }
+.skill-bar-bg {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  overflow: hidden;
+}
 
-  .skill-category {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 2rem;
-    transition: transform .3s, border-color .3s;
-  }
-  .skill-category:hover {
-    transform: translateY(-6px);
-    border-color: rgba(255,255,255,.15);
-  }
+.skill-bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  width: 0; /* JS বা রেভিল এনিমেশনের জন্য শুরুতে ০ */
+  transition: width 1.5s cubic-bezier(1, 0, 0, 1);
+}
 
-  .skill-cat-header {
-    display: flex; align-items: center; gap: .8rem;
-    margin-bottom: 1.5rem;
-  }
-  .skill-cat-icon {
-    width: 42px; height: 42px;
-    border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.2rem;
-  }
-  .skill-cat-title {
-    font-family: var(--font-head);
-    font-weight: 700; font-size: 1rem;
-  }
+/* যখন সেকশনটি দৃশ্যমান হবে (Reveal class) তখন বার ফিল হবে */
+.reveal.visible .skill-bar-fill {
+  /* width inline style থেকে পাবে */
+}
 
-  .skill-bars { display: flex; flex-direction: column; gap: 1rem; }
+/* Tech Tags */
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 2rem;
+}
 
-  .skill-bar-item { }
-  .skill-bar-top {
-    display: flex; justify-content: space-between;
-    font-size: .85rem; margin-bottom: .4rem;
-    color: var(--muted);
-  }
-  .skill-bar-bg {
-    height: 6px; background: rgba(255,255,255,.07);
-    border-radius: 6px; overflow: hidden;
-  }
-  .skill-bar-fill {
-    height: 100%; border-radius: 6px;
-    transform-origin: left;
-    animation: fillBar 1.4s ease-out forwards;
-    animation-delay: .3s;
-    transform: scaleX(0);
-  }
-  @keyframes fillBar {
-    to { transform: scaleX(1); }
-  }
+.tech-tag {
+  padding: 0.4rem 1rem;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  transition: 0.3s;
+}
 
-  /* Tech tags */
-  .tech-tags { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
-  .tech-tag {
-    padding: .3rem .8rem;
-    border-radius: 6px;
-    font-size: .78rem; font-weight: 600;
-    letter-spacing: .5px;
-  }
+.skill-category:hover .tech-tag {
+  border-color: rgba(255, 255, 255, 0.1);
+  transform: translateY(-2px);
+}
 
-  /* ─── Education ─── */
-  #education { background: var(--surface); }
+  /* ─── Education Section Upgraded ─── */
+#education { 
+    background: var(--surface); 
+    padding: 100px 5%;
+}
 
-  .timeline { position: relative; margin-top: 3rem; }
-  .timeline::before {
+.timeline { 
+    position: relative; 
+    margin-top: 4rem; 
+    padding-left: 20px;
+}
+
+/* টাইমলাইন মেইন লাইন */
+.timeline::before {
     content: '';
-    position: absolute; left: 20px; top: 0; bottom: 0;
+    position: absolute; 
+    left: 20px; top: 0; bottom: 0;
     width: 2px;
-    background: linear-gradient(to bottom, var(--c4), var(--c5), transparent);
-  }
+    background: linear-gradient(to bottom, var(--c4), var(--c3), var(--c2), transparent);
+    box-shadow: 0 0 15px rgba(var(--c4-rgb), 0.3);
+}
 
-  .timeline-item {
-    display: flex; gap: 2rem;
-    margin-bottom: 2.5rem;
-    padding-left: 0;
+.timeline-item {
+    display: flex; 
+    gap: 2.5rem;
+    margin-bottom: 3.5rem;
     position: relative;
-  }
+    transition: 0.4s ease;
+}
 
-  .timeline-dot {
-    width: 42px; height: 42px; flex-shrink: 0;
+/* ডট এনিমেশন */
+.timeline-dot {
+    width: 45px; height: 45px; 
+    flex-shrink: 0;
     border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
-    font-size: 1rem; z-index: 1;
+    font-size: 1.1rem; 
+    z-index: 2;
     position: relative;
-  }
+    background: var(--card); /* Base color */
+    border: 2px solid currentColor;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
 
-  .timeline-content {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 1.5rem 2rem;
+.timeline-item:hover .timeline-dot {
+    transform: scale(1.2) rotate(360deg);
+    background: currentColor;
+    color: #fff !important;
+    box-shadow: 0 0 25px currentColor;
+}
+
+/* কন্টেন্ট কার্ড (Glass Effect) */
+.timeline-content {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 2rem;
     flex: 1;
-    transition: border-color .3s;
-  }
-  .timeline-content:hover { border-color: rgba(255,255,255,.2); }
+    position: relative;
+    transition: all 0.4s ease;
+}
 
-  .timeline-year {
-    font-size: .8rem; letter-spacing: 1px; text-transform: uppercase;
-    color: var(--muted); margin-bottom: .3rem;
-  }
-  .timeline-degree {
-    font-family: var(--font-head); font-size: 1.1rem; font-weight: 700;
-    margin-bottom: .2rem;
-  }
-  .timeline-inst { color: var(--muted); font-size: .95rem; }
-  .timeline-gpa {
-    display: inline-block;
-    margin-top: .8rem;
-    padding: .25rem .8rem;
+.timeline-content:hover {
+    transform: translateX(10px);
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+}
+
+/* GPA ট্যাগ স্টাইল */
+.timeline-gpa {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 1rem;
+    padding: 0.4rem 1.2rem;
     border-radius: 50px;
-    font-size: .8rem; font-weight: 700;
-    background: rgba(77,150,255,.15);
-    color: var(--c4);
-    border: 1px solid rgba(77,150,255,.3);
-  }
+    font-size: 0.85rem; 
+    font-weight: 700;
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--text);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: 0.3s;
+}
 
+.timeline-item:nth-child(1) .timeline-gpa { color: var(--c4); border-color: rgba(var(--c4-rgb), 0.3); }
+.timeline-item:nth-child(2) .timeline-gpa { color: var(--c3); border-color: rgba(var(--c3-rgb), 0.3); }
+.timeline-item:nth-child(3) .timeline-gpa { color: var(--c2); border-color: rgba(var(--c2-rgb), 0.3); }
+
+.timeline-item:hover .timeline-gpa {
+    background: currentColor;
+    color: #000;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .timeline-item { gap: 1.5rem; }
+    .timeline::before { left: 15px; }
+    .timeline-dot { width: 35px; height: 35px; font-size: 0.9rem; }
+}
   /* ─── Experience ─── */
   #experience { }
 
@@ -993,8 +1409,157 @@
   .c3 { color: var(--c3); } .bg-c3 { background: rgba(107,203,119,.15); }
   .c4 { color: var(--c4); } .bg-c4 { background: rgba(77,150,255,.15); }
   .c5 { color: var(--c5); } .bg-c5 { background: rgba(199,125,255,.15); }
+
+  /* ─── কার্ডের আধুনিক হোভার এনিমেশন ─── */
+
+/* Skills, Education এবং Experience কার্ডগুলোকে সিলেক্ট করা হচ্ছে */
+.skill-card, .edu-card, .exp-card, .education-item, .experience-item {
+    position: relative;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 25px;
+    transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1); /* স্মুথ মুভমেন্টের জন্য */
+    overflow: hidden;
+    z-index: 1;
+}
+
+/* কার্ড হোভার ইফেক্ট */
+.skill-card:hover, .edu-card:hover, .exp-card:hover, .education-item:hover, .experience-item:hover {
+    transform: translateY(-12px) scale(1.02); /* কার্ডটি উপরে উঠে আসবে */
+    border-color: var(--c1); /* বর্ডার হাইলাইট হবে */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 
+                0 0 20px rgba(99, 102, 241, 0.2); /* হালকা গ্লো ইফেক্ট */
+}
+
+/* কার্ডের ভেতরে থাকা আইকনের এনিমেশন */
+.skill-card i, .edu-card i, .exp-card i, .icon-box i {
+    transition: all 0.5s ease;
+    display: inline-block;
+}
+
+.skill-card:hover i, .edu-card:hover i, .exp-card:hover i {
+    transform: scale(1.2) rotate(-10deg); /* আইকনটি বড় হয়ে হালকা বাঁকবে */
+    color: var(--c1); /* আইকনের রঙ পরিবর্তন হবে */
+}
+
+/* কার্ডের নিচে একটি হালকা গ্রাডিয়েন্ট লেয়ার (সাজানোর জন্য) */
+.skill-card::after, .edu-card::after, .exp-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.03));
+    z-index: -1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.skill-card:hover::after, .edu-card:hover::after, .exp-card:hover::after {
+    opacity: 1;
+}
+
+/* চিপস (Chips) হোভার এনিমেশন */
+.chip {
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.chip:hover {
+    transform: scale(1.1) translateY(-3px);
+    background: var(--grad) !important;
+    color: #fff !important;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+  /* ─── ১. কালার ভ্যারিয়েবল (সবচেয়ে গুরুত্বপূর্ণ) ─── */
+:root {
+    --bg-color: #0a0a0f;
+    --card-bg: #12121b;
+    --text-color: #ffffff;
+    --muted-color: #a0a0a0;
+    --border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] {
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
+    --text-color: #0f172a;
+    --muted-color: #64748b;
+    --border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* আপনার মেইন সেকশনগুলোতে এই ভ্যারিয়েবলগুলো ব্যবহার করুন */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    transition: all 0.3s ease;
+}
+
+/* ─── ২. Navbar থিম বাটন স্টাইল ─── */
+.theme-btn {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    color: var(--text-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.3s;
+    margin-left: 15px; /* মেনু থেকে দূরত্ব */
+}
+
+.theme-btn:hover {
+    transform: scale(1.1);
+    background: var(--border-color);
+}
+
+/* ─── ৩. কার্ড ও অন্যান্য এলিমেন্টে এনিমেশন ─── */
+.project-card, .about-img-frame, .chip {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.project-card:hover {
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+}
+
+/* ─── ৪. Back to Top Button ─── */
+#backToTop {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    display: none;
+    background: linear-gradient(135deg, #6366f1, #a855f7);
+    color: white;
+    border: none;
+    padding: 12px 15px;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    transition: 0.3s;
+}
 </style>
 </head>
+<div class="theme-switch-wrapper">
+  <label class="theme-switch" for="checkbox">
+    <input type="checkbox" id="checkbox" />
+    <div class="slider round">
+      <i class="fa-solid fa-moon"></i>
+      <i class="fa-solid fa-sun"></i>
+    </div>
+  </label>
+</div>
+
+<button id="backToTop" title="Go to top">
+  <i class="fa-solid fa-arrow-up"></i>
+</button>
 <body>
 
 <!-- ─── Navbar ─── -->
@@ -1009,6 +1574,11 @@
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <div class="nav-actions">
+    <button id="theme-toggle" class="theme-btn" title="Toggle Theme">
+        <i class="fa-solid fa-moon"></i>
+    </button>
+</div>
   <button class="hamburger" id="hamburger" aria-label="Menu">
     <span></span><span></span><span></span>
   </button>
@@ -1081,31 +1651,21 @@
     "  <div class="hero-photo">
   <img src="assets/about-profile.png" alt="Hosen Bakaul">
 </div>"
-      <div class="floating-card fc-1">
-        <span class="fc-icon">⚡</span>
-      </div>
-      <div class="floating-card fc-2">
-        <span class="fc-icon">🚀</span> 
-      </div>
+  </div>
     </div>
   </div>
 </section>
 
 <!-- ─── About ─── -->
 <section id="about">
-  <div class="container"> <div class="about-grid">
+  <div class="container">
+    <div class="about-grid">
       
       <div class="about-image-side reveal">
         <div class="about-img-frame">
           <img src="assets/hero-profile.png" alt="Md Hosen Bakaul">
-          
-          <div class="about-img-placeholder">
-            <i class="fa-solid fa-user-tie"></i>
-            <span>Your Photo</span>
-          </div>
         </div>
         <div class="about-accent"></div>
-        <div class="about-accent-2"></div>
       </div>
 
       <div class="about-text reveal">
@@ -1120,13 +1680,7 @@
         
         <p>
           I love working on meaningful projects that solve real-world problems. Whether it's a sleek UI component 
-          or a complex backend API, I bring the same passion and attention to detail. I enjoy the full spectrum — 
-          from crafting pixel-perfect interfaces to designing robust server architectures.
-        </p>
-        
-        <p>
-          Outside of coding, you'll find me playing football, exploring new music, or watching documentaries about 
-          science and technology.
+          or a complex backend API.
         </p>
 
         <div class="about-chips">
@@ -1138,112 +1692,106 @@
         </div>
       </div>
 
-    </div> </div>
+    </div> 
+  </div>
 </section>
 
-<!-- ─── Skills ─── -->
+<!-- ─── skills ─── -->
 <section id="skills">
-  <div style="text-align:center; max-width:600px; margin:0 auto 0;">
+  <div style="text-align:center; max-width:600px; margin:0 auto 40px;">
     <div class="section-tag" style="display:inline-flex"><span class="dot"></span> My Skills</div>
     <h2 class="section-title">Tech Stack &<br><span class="gradient-text">Expertise</span></h2>
   </div>
 
   <div class="skills-grid">
-    <!-- Frontend -->
     <div class="skill-category reveal">
       <div class="skill-cat-header">
-        <div class="skill-cat-icon bg-c1" style="color:var(--c1)"><i class="fa-solid fa-palette"></i></div>
-        <div class="skill-cat-title">Frontend</div>
+        <div class="skill-cat-icon" style="color:var(--c1)"><i class="fa-solid fa-palette"></i></div>
+        <div class="skill-cat-title">Frontend Development</div>
       </div>
       <div class="skill-bars">
         <div class="skill-bar-item">
           <div class="skill-bar-top"><span>HTML & CSS</span><span>95%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:95%;background:linear-gradient(90deg,var(--c1),var(--c2))"></div></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:95%; background:linear-gradient(90deg, var(--c1), var(--c2))"></div></div>
         </div>
         <div class="skill-bar-item">
-          <div class="skill-bar-top"><span>JavaScript</span><span>90%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:90%;background:linear-gradient(90deg,var(--c1),var(--c2))"></div></div>
+          <div class="skill-bar-top"><span>JavaScript (ES6+)</span><span>90%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:90%; background:linear-gradient(90deg, var(--c1), var(--c2))"></div></div>
         </div>
         <div class="skill-bar-item">
           <div class="skill-bar-top"><span>React.js</span><span>90%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:90%;background:linear-gradient(90deg,var(--c1),var(--c2))"></div></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:90%; background:linear-gradient(90deg, var(--c1), var(--c2))"></div></div>
         </div>
         <div class="skill-bar-item">
-          <div class="skill-bar-top"><span>Tailwind CSS</span><span>88%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:88%;background:linear-gradient(90deg,var(--c1),var(--c2))"></div></div>
+          <div class="skill-bar-top"><span>Tailwind</span><span>90%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:90%; background:linear-gradient(90deg, var(--c1), var(--c2))"></div></div>
         </div>
       </div>
       <div class="tech-tags">
-        <span class="tech-tag" style="background:rgba(255,107,107,.12);color:var(--c1)">HTML5</span>
-        <span class="tech-tag" style="background:rgba(255,107,107,.12);color:var(--c1)">CSS3</span>
-        <span class="tech-tag" style="background:rgba(255,107,107,.12);color:var(--c1)">React</span>
-        <span class="tech-tag" style="background:rgba(255,107,107,.12);color:var(--c1)">Tailwind</span>
-        <span class="tech-tag" style="background:rgba(255,107,107,.12);color:var(--c1)">Bootstrap</span>
+        <span class="tech-tag" style="background:rgba(255,107,107,0.1); color:var(--c1)">React</span>
+        <span class="tech-tag" style="background:rgba(255,107,107,0.1); color:var(--c1)">Tailwind</span>
+        <span class="tech-tag" style="background:rgba(255,107,107,0.1); color:var(--c1)">Bootstrap</span>
       </div>
     </div>
 
-    <!-- Backend -->
     <div class="skill-category reveal">
       <div class="skill-cat-header">
-        <div class="skill-cat-icon bg-c3" style="color:var(--c3)"><i class="fa-solid fa-server"></i></div>
-        <div class="skill-cat-title">Backend</div>
+        <div class="skill-cat-icon" style="color:var(--c3)"><i class="fa-solid fa-server"></i></div>
+        <div class="skill-cat-title">Backend Development</div>
       </div>
       <div class="skill-bars">
         <div class="skill-bar-item">
           <div class="skill-bar-top"><span>Node.js</span><span>96%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:96%;background:linear-gradient(90deg,var(--c3),var(--c4))"></div></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:96%; background:linear-gradient(90deg, var(--c3), var(--c4))"></div></div>
         </div>
         <div class="skill-bar-item">
           <div class="skill-bar-top"><span>Express.js</span><span>90%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:95%;background:linear-gradient(90deg,var(--c3),var(--c4))"></div></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:90%; background:linear-gradient(90deg, var(--c3), var(--c4))"></div></div>
         </div>
         <div class="skill-bar-item">
           <div class="skill-bar-top"><span>MongoDB</span><span>92%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:92%;background:linear-gradient(90deg,var(--c3),var(--c4))"></div></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:92%; background:linear-gradient(90deg, var(--c3), var(--c4))"></div></div>
         </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-top"><span>REST API</span><span>82%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:82%;background:linear-gradient(90deg,var(--c3),var(--c4))"></div></div>
+          <div class="skill-bar-item">
+          <div class="skill-bar-top"><span>REST API</span><span>92%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:92%; background:linear-gradient(90deg, var(--c3), var(--c4))"></div></div>
         </div>
+      
       </div>
       <div class="tech-tags">
-        <span class="tech-tag" style="background:rgba(107,203,119,.12);color:var(--c3)">Node.js</span>
-        <span class="tech-tag" style="background:rgba(107,203,119,.12);color:var(--c3)">Express</span>
-        <span class="tech-tag" style="background:rgba(107,203,119,.12);color:var(--c3)">MongoDB</span>
-        <span class="tech-tag" style="background:rgba(107,203,119,.12);color:var(--c3)">Firebase</span>
+        <span class="tech-tag" style="background:rgba(107,203,119,0.1); color:var(--c3)">Node.js</span>
+        <span class="tech-tag" style="background:rgba(107,203,119,0.1); color:var(--c3)">Express</span>
+        <span class="tech-tag" style="background:rgba(107,203,119,0.1); color:var(--c3)">MongoDB</span>
       </div>
     </div>
 
-    <!-- Tools -->
     <div class="skill-category reveal">
       <div class="skill-cat-header">
-        <div class="skill-cat-icon bg-c5" style="color:var(--c5)"><i class="fa-solid fa-wrench"></i></div>
+        <div class="skill-cat-icon" style="color:var(--c5)"><i class="fa-solid fa-wrench"></i></div>
         <div class="skill-cat-title">Tools & Others</div>
       </div>
       <div class="skill-bars">
         <div class="skill-bar-item">
           <div class="skill-bar-top"><span>Git & GitHub</span><span>95%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:95%;background:linear-gradient(90deg,var(--c5),var(--c1))"></div></div>
-        </div>
-        <div class="skill-bar-item">
-          <div class="skill-bar-top"><span>VS Code</span><span>92%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:92%;background:linear-gradient(90deg,var(--c5),var(--c1))"></div></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:95%; background:linear-gradient(90deg, var(--c5), var(--c1))"></div></div>
         </div>
         <div class="skill-bar-item">
           <div class="skill-bar-top"><span>Figma</span><span>90%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:90%;background:linear-gradient(90deg,var(--c5),var(--c1))"></div></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:90%; background:linear-gradient(90deg, var(--c5), var(--c1))"></div></div>
         </div>
         <div class="skill-bar-item">
-          <div class="skill-bar-top"><span>Docker</span><span>55%</span></div>
-          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:55%;background:linear-gradient(90deg,var(--c5),var(--c1))"></div></div>
+          <div class="skill-bar-top"><span>Postman</span><span>85%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:85%; background:linear-gradient(90deg, var(--c5), var(--c1))"></div></div>
+        </div>
+        <div class="skill-bar-item">
+          <div class="skill-bar-top"><span>VS Code</span><span>100%</span></div>
+          <div class="skill-bar-bg"><div class="skill-bar-fill" style="width:100%; background:linear-gradient(90deg, var(--c5), var(--c1))"></div></div>
         </div>
       </div>
       <div class="tech-tags">
-        <span class="tech-tag" style="background:rgba(199,125,255,.12);color:var(--c5)">Git</span>
-        <span class="tech-tag" style="background:rgba(199,125,255,.12);color:var(--c5)">Figma</span>
-        <span class="tech-tag" style="background:rgba(199,125,255,.12);color:var(--c5)">Docker</span>
-        <span class="tech-tag" style="background:rgba(199,125,255,.12);color:var(--c5)">Postman</span>
-        <span class="tech-tag" style="background:rgba(199,125,255,.12);color:var(--c5)">Linux</span>
+        <span class="tech-tag" style="background:rgba(199,125,255,0.1); color:var(--c5)">Git</span>
+        <span class="tech-tag" style="background:rgba(199,125,255,0.1); color:var(--c5)">Docker</span>
+        <span class="tech-tag" style="background:rgba(199,125,255,0.1); color:var(--c5)">Linux</span>
       </div>
     </div>
   </div>
@@ -1261,7 +1809,9 @@
         <div class="timeline-year">2021 — 2025</div>
         <div class="timeline-degree">B.Sc. in Computer Science & Engineering</div>
         <div class="timeline-inst">Daffodil International University, Dhaka, Bangladesh</div>
-        <div class="timeline-gpa">CGPA: 3.03 / 4.0</div>
+     <div class="timeline-gpa">
+    <i class="fa-solid fa-star"></i> CGPA: 3.03 / 4.0
+</div>
       </div>
     </div>
     <div class="timeline-item reveal">
@@ -1270,7 +1820,9 @@
         <div class="timeline-year">2018 — 2020</div>
         <div class="timeline-degree">Higher Secondary Certificate (HSC) — Science</div>
         <div class="timeline-inst">Daffodil International College, Chandpur, Bangladesh</div>
-        <div class="timeline-gpa">GPA: 4.25 / 5.00</div>
+        <div class="timeline-gpa">
+    <i class="fa-solid fa-star"></i> GPA: 4.25 / 5.00
+</div>
       </div>
     </div>
     <div class="timeline-item reveal">
@@ -1280,7 +1832,9 @@
         <div class="timeline-degree">Secondary School Certificate (SSC) — Science</div>
         <div class="timeline-inst">Tarpurchandi G.m. Fazlul Hoque High School
 ,Chandpur, Bangladesh</div>
-        <div class="timeline-gpa">GPA: 4.50 / 5.00</div>
+       <div class="timeline-gpa">
+    <i class="fa-solid fa-star"></i> GPA: 4.50 / 5.00
+</div>
       </div>
     </div>
   </div>
@@ -1502,106 +2056,188 @@
 }
   ];
 
-  // ─── Render Projects ───
-  const grid = document.getElementById('projectsGrid');
-  projects.forEach(p => {
-    const card = document.createElement('div');
-    card.className = 'project-card reveal';
-    card.innerHTML = `
-      <div class="project-thumb" style="background:${p.bg}">
-        <div class="project-thumb-placeholder" style="color:${p.color}">
-          <span style="font-size:3.5rem">${p.emoji}</span>
-          <span style="font-size:1rem;opacity:.5">${p.name.split('—')[0]}</span>
-        </div>
-        <div class="project-thumb-overlay">
-          <button onclick="openModal(${p.id})" class="btn-primary" style="padding:.6rem 1.4rem;font-size:.85rem">
-            <i class="fa-solid fa-eye"></i> View Details
-          </button>
-        </div>
-      </div>
-      <div class="project-body">
-        <div class="project-tags">
-          ${p.tags.map(t=>`<span class="project-tag">${t}</span>`).join('')}
-        </div>
-        <div class="project-name">${p.name}</div>
-        <div class="project-desc">${p.desc}</div>
-        <div class="project-footer">
-          <button onclick="openModal(${p.id})" class="btn-secondary" style="padding:.55rem 1.2rem;font-size:.85rem">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i> View More
-          </button>
-        </div>
-      </div>
-    `;
-    grid.appendChild(card);
-  });
+ // ─── Render Projects ───
+const grid = document.getElementById('projectsGrid');
+if (grid && typeof projects !== 'undefined') {
+    projects.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'project-card reveal';
+        card.innerHTML = `
+            <div class="project-thumb" style="background:${p.bg}">
+                <div class="project-thumb-placeholder" style="color:${p.color}">
+                    <span style="font-size:3.5rem">${p.emoji}</span>
+                    <span style="font-size:1rem;opacity:.5">${p.name.split('—')[0]}</span>
+                </div>
+                <div class="project-thumb-overlay">
+                    <button onclick="openModal(${p.id})" class="btn-primary" style="padding:.6rem 1.4rem;font-size:.85rem">
+                        <i class="fa-solid fa-eye"></i> View Details
+                    </button>
+                </div>
+            </div>
+            <div class="project-body">
+                <div class="project-tags">
+                    ${p.tags.map(t => `<span class="project-tag">${t}</span>`).join('')}
+                </div>
+                <div class="project-name">${p.name}</div>
+                <div class="project-desc">${p.desc}</div>
+                <div class="project-footer">
+                    <button onclick="openModal(${p.id})" class="btn-secondary" style="padding:.55rem 1.2rem;font-size:.85rem">
+                        <i class="fa-solid fa-arrow-up-right-from-square"></i> View More
+                    </button>
+                </div>
+            </div>
+        `;
+        grid.appendChild(card);
+    });
+}
 
-  // ─── Modal ───
-  function openModal(id) {
+// ─── Theme Switcher Logic ───
+const themeBtn = document.getElementById('theme-toggle');
+const themeIcon = themeBtn ? themeBtn.querySelector('i') : null;
+const currentTheme = localStorage.getItem('theme');
+
+if (currentTheme === 'light') {
+    document.documentElement.setAttribute('data-theme', 'light');
+    if (themeIcon) themeIcon.classList.replace('fa-moon', 'fa-sun');
+}
+
+if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+        document.body.style.transition = "background 0.5s ease, color 0.5s ease";
+        let theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'light') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            localStorage.setItem('theme', 'dark');
+            if (themeIcon) themeIcon.classList.replace('fa-sun', 'fa-moon');
+        } else {
+            document.documentElement.setAttribute('data-theme', 'light');
+            localStorage.setItem('theme', 'light');
+            if (themeIcon) themeIcon.classList.replace('fa-moon', 'fa-sun');
+        }
+    });
+}
+
+// ─── Modal Logic ───
+function openModal(id) {
     const p = projects.find(x => x.id === id);
+    if (!p) return;
     document.getElementById('modalThumb').innerHTML = `
-      <div class="modal-thumb-placeholder" style="background:${p.bg};color:${p.color};font-size:4rem">
-        ${p.emoji}
-      </div>
-    `;
+        <div class="modal-thumb-placeholder" style="background:${p.bg};color:${p.color};font-size:4rem">
+            ${p.emoji}
+        </div>`;
     document.getElementById('modalTitle').textContent = p.name;
     document.getElementById('modalStack').innerHTML = p.stack.map(s =>
-      `<span class="project-tag" style="background:rgba(255,255,255,.07)">${s}</span>`
+        `<span class="project-tag" style="background:rgba(255,255,255,.07)">${s}</span>`
     ).join('');
     document.getElementById('modalDesc').textContent = p.fullDesc;
-    document.getElementById('modalChallenges').textContent = p.challenges;
-    document.getElementById('modalFuture').textContent = p.future;
     document.getElementById('modalLinks').innerHTML = `
-      <a href="${p.live}" target="_blank" class="btn-primary" style="padding:.65rem 1.5rem;font-size:.9rem">
-        <i class="fa-solid fa-up-right-from-square"></i> Live Demo
-      </a>
-      <a href="${p.github}" target="_blank" class="btn-secondary" style="padding:.65rem 1.5rem;font-size:.9rem">
-        <i class="fab fa-github"></i> GitHub
-      </a>
-    `;
+        <a href="${p.live}" target="_blank" class="btn-primary"><i class="fa-solid fa-up-right-from-square"></i> Live Demo</a>
+        <a href="${p.github}" target="_blank" class="btn-secondary"><i class="fab fa-github"></i> GitHub</a>`;
     document.getElementById('modalOverlay').classList.add('open');
     document.body.style.overflow = 'hidden';
-  }
+}
 
-  function closeModal() {
+function closeModal() {
     document.getElementById('modalOverlay').classList.remove('open');
     document.body.style.overflow = '';
-  }
+}
 
-  document.getElementById('modalOverlay').addEventListener('click', e => {
-    if (e.target === e.currentTarget) closeModal();
-  });
+// ─── Skill & Reveal Observer ───
+const observerOptions = { threshold: 0.15 };
 
-  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+const globalObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            
+            // Skill Bar Animation Trigger
+            if (entry.target.classList.contains('skill-category')) {
+                const fills = entry.target.querySelectorAll('.skill-bar-fill');
+                fills.forEach(fill => {
+                    const styleAttr = fill.getAttribute('style');
+                    const match = styleAttr ? styleAttr.match(/width:\s*(\d+)%/) : null;
+                    if (match) {
+                        const targetWidth = match[1] + '%';
+                        fill.style.width = '0';
+                        setTimeout(() => { fill.style.width = targetWidth; }, 100);
+                    }
+                });
+                globalObserver.unobserve(entry.target);
+            }
+        }
+    });
+}, observerOptions);
 
-  // ─── Hamburger ───
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => mobileMenu.classList.toggle('open'));
-  function closeMobile() { mobileMenu.classList.remove('open'); }
+document.querySelectorAll('.reveal, .skill-category').forEach(el => globalObserver.observe(el));
 
-  // ─── Scroll Reveal ───
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
-  }, { threshold: 0.12 });
-
-  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-  // ─── Contact form ───
-  function sendMessage() {
-    const msg = document.getElementById('formMsg');
-    msg.style.display = 'block';
-    setTimeout(() => msg.style.display = 'none', 4000);
-  }
-
-  // ─── Navbar scroll effect ───
-  window.addEventListener('scroll', () => {
-    const nav = document.getElementById('navbar');
-    if (window.scrollY > 80) {
-      nav.style.background = 'rgba(10,10,15,0.97)';
-    } else {
-      nav.style.background = 'rgba(10,10,15,0.85)';
+// ─── Interactive Effects (Mouse & Tilt) ───
+document.addEventListener('mousemove', (e) => {
+    const accent = document.querySelector('.about-accent-2');
+    if (accent) {
+        let x = e.clientX / 60;
+        let y = e.clientY / 60;
+        accent.style.transform = `translate(${x}px, ${y}px) rotate(20deg)`;
     }
-  });
+});
+
+document.querySelectorAll('.skill-card, .edu-card, .skill-category').forEach(card => {
+    card.addEventListener('mousemove', (e) => {
+        let x = (window.innerWidth / 2 - e.pageX) / 35;
+        let y = (window.innerHeight / 2 - e.pageY) / 35;
+        card.style.transform = `translateY(-10px) rotateX(${y}deg) rotateY(${x}deg)`;
+    });
+
+    card.addEventListener('mouseleave', () => {
+        card.style.transform = `translateY(0) rotateX(0) rotateY(0)`;
+    });
+
+    // Pulse feedback for Skill categories
+    if (card.classList.contains('skill-category')) {
+        card.addEventListener('click', () => {
+            card.style.borderColor = 'var(--c2)';
+            setTimeout(() => { card.style.borderColor = 'var(--border)'; }, 300);
+        });
+    }
+});
+
+// ─── Navbar & Scroll Effects ───
+window.addEventListener('scroll', () => {
+    const nav = document.getElementById('navbar');
+    const btt = document.getElementById("backToTop");
+    if (window.scrollY > 80) nav.style.background = 'var(--card-bg)';
+    else nav.style.background = 'transparent';
+    if (btt) btt.style.display = window.scrollY > 400 ? "block" : "none";
+});
+
+const bttBtn = document.getElementById("backToTop");
+if (bttBtn) {
+    bttBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+}
+
+// ─── Mobile Menu ───
+const hamburger = document.getElementById('hamburger');
+const mobileMenu = document.getElementById('mobileMenu');
+if (hamburger && mobileMenu) {
+    hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        mobileMenu.classList.toggle('open');
+    });
+}
+
+function closeMobile() {
+    if (hamburger) hamburger.classList.remove('active');
+    if (mobileMenu) mobileMenu.classList.remove('open');
+}
+
+// ─── Contact Form ───
+function sendMessage() {
+    const msgBox = document.getElementById('formMsg');
+    if (msgBox) {
+        msgBox.style.display = 'block';
+        msgBox.style.animation = 'fadeIn 0.5s ease-in-out';
+        setTimeout(() => { msgBox.style.display = 'none'; }, 4000);
+    }
+}
 </script>
 </body>
 </html>
